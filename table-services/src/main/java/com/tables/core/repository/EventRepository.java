@@ -11,7 +11,6 @@ import java.util.Optional;
 public interface EventRepository extends CrudRepository<Event, String> {
 
     Optional<Event> findTop1ByTableIdOrderByCreatedAtDesc(String tableId);
-    Optional<Event> findTop1ByTransactionIdOrderByCreatedAtDesc(String transactionId);
 
     List<Event> findAllOrderByCreatedAtDesc();
 }

@@ -94,6 +94,14 @@ public class KafkaConfig {
         return buildTopic(ETopic.PRODUCT_VALIDATION_FAIL.getTopic());
     }
     @Bean
+    public NewTopic inventory_successTopic(){
+        return buildTopic(ETopic.INVENTORY_SUCCESS.getTopic());
+    }
+    @Bean
+    public NewTopic inventory_failTopic(){
+        return buildTopic(ETopic.INVENTORY_FAIL.getTopic());
+    }
+    @Bean
     public NewTopic payment_successTopic(){
         return buildTopic(ETopic.PAYMENT_SUCCESS.getTopic());
     }

@@ -45,12 +45,6 @@ public class TableService {
     private JsonUtil jsonUtil;
     @Inject
     private EventService eventService;
-    @Inject
-    private final Counter counter;
-
-    public TableService(MeterRegistry meterRegistry){
-        this.counter = meterRegistry.counter("table_create_amount");
-    }
 
     public List<TableBar> list(){
         List<TableBar> tableBars = tableRepository.findAll();
@@ -79,8 +73,6 @@ public class TableService {
         tables.setState(State.LIVRE);
 
         tableRepository.save(tables);
-        counter.increment();
-
         return tables;
     }
     public TableBar addOrder(String idTable){

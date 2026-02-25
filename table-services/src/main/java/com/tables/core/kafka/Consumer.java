@@ -22,8 +22,6 @@ public class Consumer {
     @Inject
     private EventService eventService;
     @Inject
-    private ProductService eventProduct;
-    @Inject
     private JsonUtil jsonUtil;
 
     @Topic("${kafka.topic.notify}")
@@ -36,7 +34,7 @@ public class Consumer {
         if (Objects.equals(key, "2")) {
             LOG.info("Receiving ending notification event product {} from notify topic", payload);
             var event = jsonUtil.toEventProduct(payload);
-            eventProduct.notify(event);
+            eventService.notifyProduct(event);
         }
     }
 }

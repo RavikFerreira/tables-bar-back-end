@@ -2,6 +2,7 @@ package com.example.core.services;
 
 import com.example.core.dto.EventProduct;
 import com.example.core.dto.HistoryProduct;
+import com.example.core.enums.EEventSource;
 import com.example.core.enums.EStatus;
 import com.example.core.enums.ETopic;
 import com.example.core.kafka.Producer;
@@ -32,7 +33,7 @@ public class OrchestratorProductService {
     private SagaExecutionProductController sagaExecutionProductController;
 
     public void start(EventProduct event){
-        event.setProductSource(ORCHESTRATOR);
+        event.setProductSource(EEventSource.ORCHESTRATOR);
         event.setProductStatus(EStatus.SUCCESS);
         ETopic topic = getTopic(event);
         LOG.info("STARTED!");
@@ -40,14 +41,14 @@ public class OrchestratorProductService {
         sendToProducerWithTopic(event,topic);
     }
     public void finishSuccess(EventProduct event){
-        event.setProductSource(ORCHESTRATOR);
+        event.setProductSource(EEventSource.ORCHESTRATOR);
         event.setProductStatus(EStatus.SUCCESS);
         LOG.info("FINISHED SUCCESSFULLY FOR EVENT {}", event.getId());
         addHistory(event, "Finished successfully!");
         notifyFinished(event);
     }
     public void finishFail(EventProduct event){
-        event.setProductSource(ORCHESTRATOR);
+        event.setProductSource(EEventSource.ORCHESTRATOR);
         event.setProductStatus(EStatus.FAIL);
         LOG.info("FINISHED WITH ERRORS FOR EVENT {}", event.getId());
         addHistory(event, "Finished with errors!");

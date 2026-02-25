@@ -45,12 +45,6 @@ public class TableService {
     private JsonUtil jsonUtil;
     @Inject
     private EventService eventService;
-    @Inject
-    private final Counter counter;
-
-    public TableService(MeterRegistry meterRegistry){
-        this.counter = meterRegistry.counter("table_create_amount");
-    }
 
     public List<TableBar> list(){
         List<TableBar> tableBars = tableRepository.findAll();
@@ -79,8 +73,6 @@ public class TableService {
         tables.setState(State.LIVRE);
 
         tableRepository.save(tables);
-        counter.increment();
-
         return tables;
     }
     public TableBar addOrder(String idTable){
@@ -129,7 +121,17 @@ public class TableService {
                 .reduce(0.0, Double::sum));
 
         tableRepository.update(tables);
-        producer.sendEvent(jsonUtil.toJson(createPayload(tables)));
+        return tables;
+    }
+    public TableBar finalizedOrder(String idTable){
+        TableBar tables = tableRepository.findByIdTable(idTable).orElseThrow(() -> new TablesResourceNotFoundException("Tables resource not found! "));
+        if(tables.getOrder().getProducts().isEmpty()){
+            throw new ProductResourceNotFoundException("Order list is empty! ");
+        }
+        else {
+            tableRepository.update(tables);
+            producer.sendEvent(jsonUtil.toJson(createPayload(tables)));
+        }
         return tables;
     }
 

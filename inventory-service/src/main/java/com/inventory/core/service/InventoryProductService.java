@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public class InventoryProductService {
     private static final Logger LOG = LoggerFactory.getLogger(InventoryProductService.class);
 
-    private static final String CURRENT_SOURCE = "INVENTORY_SERVICE";
+    private static final String CURRENT_SOURCE_PRODUCT = "INVENTORY_SERVICE";
 
     @Inject
     private JsonUtil jsonUtil;
@@ -30,9 +30,9 @@ public class InventoryProductService {
 
     public void createInventory(EventProduct event){
         try{
-            createInventory(event);
-            Product product = event.getPayload();
-            Inventory orderInventory = createInventory(event, product);
+//            createInventoryProduct(event);
+//            Product product = event.getPayload();
+            Inventory orderInventory = createInventoryProduct(event);
             inventoryRepository.update(orderInventory);
             handleSuccess(event);
         }catch (Exception ex) {
@@ -42,7 +42,7 @@ public class InventoryProductService {
             producer.sendEventProduct(jsonUtil.toJson(event));
     }
 
-    private Inventory createInventory(EventProduct event, Product product){
+    private Inventory createInventoryProduct(EventProduct event){
         Inventory inventory = new Inventory();
         inventory.setIdProduct(event.getPayload().getIdProduct());
         inventory.setAvailable(event.getPayload().getQuantity());
@@ -52,7 +52,7 @@ public class InventoryProductService {
 
     private void handleSuccess(EventProduct event){
         event.setStatus(EProductStatus.SUCCESS);
-        event.setSource(CURRENT_SOURCE);
+        event.setSource(CURRENT_SOURCE_PRODUCT);
         addHistory(event, "Inventory updated successfully");
     }
     private void addHistory(EventProduct event, String message){
@@ -65,13 +65,13 @@ public class InventoryProductService {
     }
     private void handleFailCurrentNotExecuted(EventProduct event, String message){
         event.setStatus(EProductStatus.ROLLBACK_PENDING);
-        event.setSource(CURRENT_SOURCE);
+        event.setSource(CURRENT_SOURCE_PRODUCT);
         addHistory(event, "Fail to update inventory: ".concat(message));
     }
 
     public void rollbackInventory(EventProduct event){
         event.setStatus(EProductStatus.FAIL);
-        event.setSource(CURRENT_SOURCE);
+        event.setSource(CURRENT_SOURCE_PRODUCT);
         try{
             returnInventoryToPreviousValues(event);
             addHistory(event, "Rollback executed for inventory! ");

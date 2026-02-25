@@ -5,22 +5,23 @@ import com.tables.config.exceptions.ProductResourceNotFoundException;
 import com.tables.core.kafka.Producer;
 import com.tables.core.models.EventProduct;
 import com.tables.core.models.Product;
+import com.tables.core.repository.EventProductRepository;
 import com.tables.core.repository.ProductRepository;
-import com.tables.core.repository.TableRepository;
 import com.tables.core.utils.JsonUtil;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
 
 @Singleton
 public class ProductService {
+    private static final Logger LOG = LoggerFactory.getLogger(ProductService.class);
 
     @Inject
     private ProductRepository productRepository;
-    @Inject
-    private TableRepository tableRepository;
     @Inject
     private Producer producer;
     @Inject
@@ -48,7 +49,7 @@ public class ProductService {
         EventProduct event = new EventProduct();
         event.setId(product.getId());
         event.setPayload(product);
-        eventService.save(event);
+        eventService.saveProduct(event);
         return event;
     }
     public Product searchProduct(String idProduct){

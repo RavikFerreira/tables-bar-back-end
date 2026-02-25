@@ -45,6 +45,11 @@ public class TableController {
         TableBar product = tableService.addProductInOrder(idTable, idProduct);
         return HttpResponse.created(product);
     }
+    @Get("finallyOrder/{idTable}")
+    public HttpResponse<TableBar> finalizedOrder(@PathVariable String idTable){
+        tableService.finalizedOrder(idTable);
+        return HttpResponse.ok();
+    }
 
     @Get("search/{idTable}")
     public HttpResponse<TableBar> search(@PathVariable String idTable){
@@ -63,7 +68,7 @@ public class TableController {
         tableService.realizedPayment(idTable);
         return HttpResponse.ok();
     }
-    @Get("finallyOrder/{idTable}")
+    @Get("finallyTables/{idTable}")
     public HttpResponse<TableBar> finalizedTable(@PathVariable String idTable){
         tableService.finalizedTable(idTable);
         return HttpResponse.ok();

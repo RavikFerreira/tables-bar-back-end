@@ -1,5 +1,7 @@
 package com.tables.core.kafka;
 
+import com.tables.core.models.EventProduct;
+import com.tables.core.service.ProductService;
 import com.tables.core.utils.JsonUtil;
 import com.tables.core.service.EventService;
 import io.micronaut.configuration.kafka.annotation.KafkaKey;
@@ -28,6 +30,11 @@ public class Consumer {
             LOG.info("Receiving ending notification event {} from notify topic", payload);
             var event = jsonUtil.toEvent(payload);
             eventService.notify(event);
+        }
+        if (Objects.equals(key, "2")) {
+            LOG.info("Receiving ending notification event product {} from notify topic", payload);
+            var event = jsonUtil.toEventProduct(payload);
+            eventService.notifyProduct(event);
         }
     }
 }

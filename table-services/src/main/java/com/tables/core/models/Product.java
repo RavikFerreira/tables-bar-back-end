@@ -1,5 +1,6 @@
 package com.tables.core.models;
 
+import com.tables.core.models.enums.Category;
 import io.micronaut.data.annotation.GeneratedValue;
 import io.micronaut.data.annotation.Id;
 import io.micronaut.data.annotation.MappedEntity;
@@ -21,13 +22,15 @@ public class Product implements Serializable {
     private String name;
     private double price = 0.0;
     private int quantity;
+    private Category categories;
 
-    public Product(String id, String idProduct, String name, double price, int quantity) {
+    public Product(String id, String idProduct, String name, double price, int quantity, Category categories) {
         this.id = id;
         this.idProduct = idProduct;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.categories = categories;
     }
 
     public Product(){}
@@ -70,5 +73,13 @@ public class Product implements Serializable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public Category getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Category categories) {
+        this.categories = categories;
     }
 }

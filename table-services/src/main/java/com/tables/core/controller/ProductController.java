@@ -12,10 +12,10 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Patch;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Post;
+import io.micronaut.http.server.cors.CrossOrigin;
 import jakarta.inject.Inject;
 
 import java.util.List;
-
 @Controller("product/")
 public class ProductController {
 

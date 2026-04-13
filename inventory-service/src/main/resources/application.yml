@@ -4,7 +4,7 @@ micronaut:
 
 datasources:
   default:
-    url: jdbc:postgresql://localhost:5432/inventory-db
+    url: jdbc:postgresql://localhost:5434/inventory-db
     username: postgres
     password: 2503
     driver-class-name: org.postgresql.Driver

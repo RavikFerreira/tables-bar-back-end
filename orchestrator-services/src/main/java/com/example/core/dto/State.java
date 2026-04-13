@@ -1,4 +1,4 @@
-package com.example.core.enums;
+package com.example.core.dto;
 
 public enum State {
     LIVRE,

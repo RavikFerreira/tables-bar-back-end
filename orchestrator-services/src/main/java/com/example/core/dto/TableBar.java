@@ -1,7 +1,6 @@
 package com.example.core.dto;
 
 
-import com.example.core.enums.State;
 import io.micronaut.serde.annotation.Serdeable;
 
 import java.io.Serial;

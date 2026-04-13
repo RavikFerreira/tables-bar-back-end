@@ -1,7 +1,7 @@
 package com.example.core.dto;
 
-import com.example.core.enums.EEventProductSource;
-import com.example.core.enums.EProductStatus;
+import com.example.core.enums.EEventSource;
+import com.example.core.enums.EStatus;
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -16,13 +16,13 @@ public class EventProduct {
     private String id;
     private Product payload;
     @Enumerated(EnumType.STRING)
-    private EEventProductSource source;
+    private EEventSource source;
     @Enumerated(EnumType.STRING)
-    private EProductStatus status;
+    private EStatus status;
     private List<HistoryProduct> eventHistory;
 
 
-    public EventProduct(String id, Product payload, EEventProductSource source, EProductStatus status, List<HistoryProduct> eventHistory) {
+    public EventProduct(String id, Product payload, EEventSource source, EStatus status, List<HistoryProduct> eventHistory) {
         this.id = id;
         this.payload = payload;
         this.source = source;
@@ -49,19 +49,19 @@ public class EventProduct {
         this.payload = payload;
     }
 
-    public EEventProductSource getProductSource() {
+    public EEventSource getProductSource() {
         return source;
     }
 
-    public void setProductSource(EEventProductSource source) {
+    public void setProductSource(EEventSource source) {
         this.source = source;
     }
 
-    public EProductStatus getProductStatus() {
+    public EStatus getProductStatus() {
         return status;
     }
 
-    public void setProductStatus(EProductStatus status) {
+    public void setProductStatus(EStatus status) {
         this.status = status;
     }
 

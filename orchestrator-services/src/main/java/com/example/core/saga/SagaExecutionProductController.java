@@ -1,19 +1,21 @@
 package com.example.core.saga;
 
 import com.example.core.dto.EventProduct;
-import com.example.core.enums.EEventProductSource;
+import com.example.core.enums.EEventSource;
 import com.example.core.enums.ETopic;
 import io.micronaut.http.annotation.Controller;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 
-import static com.example.core.saga.HandlerProduct.*;
+import static com.example.core.saga.Handler.*;
 import static java.lang.String.format;
 
 
 @Controller
+@AllArgsConstructor
 public class SagaExecutionProductController {
     private static final Logger LOG = LoggerFactory.getLogger(SagaExecutionProductController.class);
     private static final String LOG_ID = "PRODUCT ID: %s | EVENT ID %s";
@@ -29,7 +31,7 @@ public class SagaExecutionProductController {
 
     public ETopic findTopicBySourceAndStatus(EventProduct event){
         return (ETopic) Arrays.stream(HANDLER_PRODUCT).filter(row -> isEventSourceAndStatusValid(event, row))
-                .map(i -> i[TOPIC_INDEX])
+                .map(row -> row[TOPIC_INDEX])
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Topic not found!"));
     }
@@ -41,7 +43,7 @@ public class SagaExecutionProductController {
     }
     private void logCurrentSaga(EventProduct event, ETopic topic){
         var sagaId = createSagaId(event);
-        EEventProductSource source = event.getProductSource();
+        EEventSource source = event.getProductSource();
         switch (event.getProductStatus()){
             case SUCCESS -> LOG.info("### CURRENT SAGA: {} | SUCCESS | NEXT TOPIC {} | {}"
                     , source, topic, sagaId);

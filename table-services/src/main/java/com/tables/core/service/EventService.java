@@ -31,6 +31,11 @@ public class EventService {
         save(event);
         LOG.info("TableID {} with notified! TransactionID: {} " + event.getTableId(),  event.getTransactionId());
     }
+    public void notifyProduct(EventProduct event){
+        event.getPayload().setIdProduct(event.getPayload().getIdProduct());
+        saveProduct(event);
+        LOG.info("ProductID {} with notified! {}", event.getPayload().getIdProduct());
+    }
     public List<Event> findAll(){
         return eventRepository.findAllOrderByCreatedAtDesc();
     }
@@ -59,12 +64,12 @@ public class EventService {
         }
     }
 
-    public Event save(Event event){
-        return eventRepository.save(event);
+    public void save(Event event){
+        eventRepository.save(event);
     }
 
-    public EventProduct save(EventProduct event){
-        return eventProductRepository.save(event);
+    public void saveProduct(EventProduct event){
+        eventProductRepository.save(event);
     }
 }
 

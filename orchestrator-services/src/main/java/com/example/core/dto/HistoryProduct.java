@@ -1,7 +1,7 @@
 package com.example.core.dto;
 
-import com.example.core.enums.EEventProductSource;
-import com.example.core.enums.EProductStatus;
+import com.example.core.enums.EEventSource;
+import com.example.core.enums.EStatus;
 import io.micronaut.serde.annotation.Serdeable;
 
 import java.time.LocalDateTime;
@@ -9,12 +9,12 @@ import java.time.LocalDateTime;
 @Serdeable
 public class HistoryProduct {
 
-    private EEventProductSource source;
-    private EProductStatus status;
+    private EEventSource source;
+    private EStatus status;
     private String message;
     private LocalDateTime createdAt;
 
-    public HistoryProduct(EEventProductSource source, EProductStatus status, String message, LocalDateTime createdAt) {
+    public HistoryProduct(EEventSource source, EStatus status, String message, LocalDateTime createdAt) {
         this.source = source;
         this.status = status;
         this.message = message;
@@ -24,19 +24,19 @@ public class HistoryProduct {
     public HistoryProduct() {
     }
 
-    public EEventProductSource getSource() {
+    public EEventSource getSource() {
         return source;
     }
 
-    public void setSource(EEventProductSource source) {
+    public void setSource(EEventSource source) {
         this.source = source;
     }
 
-    public EProductStatus getStatus() {
+    public EStatus getStatus() {
         return status;
     }
 
-    public void setStatus(EProductStatus status) {
+    public void setStatus(EStatus status) {
         this.status = status;
     }
 

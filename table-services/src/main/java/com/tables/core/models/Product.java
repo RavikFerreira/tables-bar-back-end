@@ -22,15 +22,17 @@ public class Product implements Serializable {
     private String name;
     private double price = 0.0;
     private int quantity;
-    private Category categories;
+    private Category category;
+    private String description;
 
-    public Product(String id, String idProduct, String name, double price, int quantity, Category categories) {
+    public Product(String id, String idProduct, String name, double price, int quantity, Category category, String description) {
         this.id = id;
         this.idProduct = idProduct;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
-        this.categories = categories;
+        this.category = category;
+        this.description = description;
     }
 
     public Product(){}
@@ -75,11 +77,19 @@ public class Product implements Serializable {
         this.quantity = quantity;
     }
 
-    public Category getCategories() {
-        return categories;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategories(Category categories) {
-        this.categories = categories;
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

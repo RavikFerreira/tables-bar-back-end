@@ -1,11 +1,7 @@
 package com.tables.core.service;
 
 
-import com.tables.config.exceptions.CannotCreateATableWithTheSameId;
-import com.tables.config.exceptions.CannotDeleteABusyTable;
-import com.tables.config.exceptions.PaymentNotRealizedException;
-import com.tables.config.exceptions.ProductResourceNotFoundException;
-import com.tables.config.exceptions.TablesResourceNotFoundException;
+import com.tables.config.exceptions.*;
 import com.tables.core.kafka.Producer;
 import com.tables.core.models.Event;
 import com.tables.core.models.Order;
@@ -98,11 +94,16 @@ public class TableService {
             }
         for(Product product : products){
             if(product.getIdProduct().equals(productExists.getIdProduct())){
-                product.setQuantity(product.getQuantity() + 1);
-                productExists.setQuantity(productExists.getQuantity() - product.getQuantity());
-                productRepository.update(productExists);
-                orderNotExists = true;
-                break;
+                if(productExists.getQuantity() >= product.getQuantity()){
+                    product.setQuantity(product.getQuantity() + 1);
+                    productExists.setQuantity(productExists.getQuantity() - 1);
+                    productRepository.update(productExists);
+                    orderNotExists = true;
+                    break;
+                }
+                else{
+                    throw new ProductIsOutOfStock("Product is out of stock");
+                }
             }
         }
         if (!orderNotExists) {

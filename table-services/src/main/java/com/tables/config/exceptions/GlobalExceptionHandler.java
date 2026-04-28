@@ -85,4 +85,12 @@ public class GlobalExceptionHandler {
         return HttpResponse.status(status).body(err);
     }
 
+    @Error(exception = ProductIsOutOfStock.class)
+    public HttpResponse<StandardError> handlerProductIsOutOfStock(ProductIsOutOfStock ex, HttpRequest request) {
+        String error = "Produto fora de estoque!";
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        StandardError err = new StandardError(status, error, ex.getMessage(), request.getPath());
+        return HttpResponse.status(status).body(err);
+    }
+
 }

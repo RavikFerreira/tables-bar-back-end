@@ -187,6 +187,7 @@ public class TableService {
         else {
             tables.setState(State.LIVRE);
             tables.setOrder(null);
+            tables.setAccount(0.0);
             tableRepository.update(tables);
         }
         return tables;

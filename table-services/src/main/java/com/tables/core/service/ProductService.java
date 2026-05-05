@@ -30,7 +30,7 @@ public class ProductService {
     private EventService eventService;
 
     public List<Product> productList(){
-        return productRepository.findAllOrderByCategoriesAsc();
+        return productRepository.findAllOrderByCategoryAsc();
     }
 
     public Product addProduct(Product product) throws ItIsNotPossibleToAddAProductToTheMenuWithTheSameId {
@@ -65,8 +65,15 @@ public class ProductService {
     public Product updateOrderInProduct(String idProduct, Product product) {
         searchProduct(idProduct);
         product.setIdProduct(product.getIdProduct());
+        product.setQuantity(product.getQuantity());
+        product.setCategory(product.getCategory());
+        product.setDescription(product.getDescription());
+        if(product.getDescription() == null){
+            product.setDescription(" ");
+        }
         product.setName(product.getName());
         product.setPrice(product.getPrice());
+        producer.sendEventProduct(jsonUtil.toJson(createProductPayload(product)));
         productRepository.save(product);
         return product;
     }

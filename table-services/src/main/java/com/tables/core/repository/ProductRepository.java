@@ -11,7 +11,7 @@ import java.util.Optional;
 @MongoRepository(databaseName = "table-db")
 public interface ProductRepository extends CrudRepository<Product, String> {
 
-    List<Product> findAllOrderByCategoriesAsc();
+    List<Product> findAllOrderByCategoryAsc();
     Optional<Product> findByIdProduct (String idProduct);
 
 }

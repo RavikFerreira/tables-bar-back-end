@@ -20,14 +20,21 @@ import java.util.Optional;
 public class ProductService {
     private static final Logger LOG = LoggerFactory.getLogger(ProductService.class);
 
-    @Inject
-    private ProductRepository productRepository;
-    @Inject
-    private Producer producer;
-    @Inject
-    private JsonUtil jsonUtil;
-    @Inject
-    private EventService eventService;
+
+    private final ProductRepository productRepository;
+
+    private final Producer producer;
+
+    private final JsonUtil jsonUtil;
+
+    private final EventService eventService;
+
+    public ProductService(ProductRepository productRepository, Producer producer, JsonUtil jsonUtil, EventService eventService) {
+        this.productRepository = productRepository;
+        this.producer = producer;
+        this.jsonUtil = jsonUtil;
+        this.eventService = eventService;
+    }
 
     public List<Product> productList(){
         return productRepository.findAllOrderByCategoryAsc();
@@ -38,10 +45,6 @@ public class ProductService {
         if(orders.isPresent()){
             throw new ItIsNotPossibleToAddAProductToTheMenuWithTheSameId(product.getIdProduct());
         }
-        product.setIdProduct(product.getIdProduct());
-        product.setQuantity(product.getQuantity());
-        product.setCategory(product.getCategory());
-        product.setDescription(product.getDescription());
         if(product.getDescription() == null){
             product.setDescription(" ");
         }

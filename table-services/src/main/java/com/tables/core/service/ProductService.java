@@ -2,6 +2,7 @@ package com.tables.core.service;
 
 import com.tables.config.exceptions.ItIsNotPossibleToAddAProductToTheMenuWithTheSameId;
 import com.tables.config.exceptions.ProductResourceNotFoundException;
+import com.tables.core.dto.ProductDTO;
 import com.tables.core.kafka.Producer;
 import com.tables.core.models.EventProduct;
 import com.tables.core.models.Product;
@@ -63,19 +64,18 @@ public class ProductService {
     }
 
     public Product updateOrderInProduct(String idProduct, Product product) {
-        searchProduct(idProduct);
-        product.setIdProduct(product.getIdProduct());
-        product.setQuantity(product.getQuantity());
-        product.setCategory(product.getCategory());
-        product.setDescription(product.getDescription());
-        if(product.getDescription() == null){
-            product.setDescription(" ");
+        Product existingProduct = searchProduct(idProduct);
+        existingProduct.setIdProduct(product.getIdProduct());
+        existingProduct.setName(product.getName());
+        existingProduct.setPrice(product.getPrice());
+        existingProduct.setQuantity(product.getQuantity());
+        existingProduct.setCategory(product.getCategory());
+        existingProduct.setDescription(product.getDescription());
+        if(existingProduct.getDescription() == null){
+            existingProduct.setDescription(" ");
         }
-        product.setName(product.getName());
-        product.setPrice(product.getPrice());
-        producer.sendEventProduct(jsonUtil.toJson(createProductPayload(product)));
-        productRepository.save(product);
-        return product;
+        productRepository.update(existingProduct);
+        return existingProduct;
     }
 
     public Product deleteProduct(String idProduct) {

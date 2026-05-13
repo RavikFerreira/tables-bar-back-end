@@ -2,9 +2,11 @@ package com.tables.core.controller;
 
 import com.tables.config.exceptions.ItIsNotPossibleToAddAProductToTheMenuWithTheSameId;
 import com.tables.config.exceptions.UnableToEditAnOrderFromATable;
+import com.tables.core.dto.ProductDTO;
 import com.tables.core.models.Product;
 import com.tables.core.service.ProductService;
 import io.micronaut.http.HttpResponse;
+import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Delete;
@@ -12,7 +14,6 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Patch;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Post;
-import io.micronaut.http.server.cors.CrossOrigin;
 import jakarta.inject.Inject;
 
 import java.util.List;
@@ -39,7 +40,7 @@ public class ProductController {
     }
 
     @Patch("updateOrderInProduct/{idProduct}")
-    public HttpResponse<Product> updateOrderInProduct(@PathVariable String idProduct, @Body Product product) throws UnableToEditAnOrderFromATable {
+    public MutableHttpResponse<Product> updateOrderInProduct(@PathVariable String idProduct, @Body Product product) throws UnableToEditAnOrderFromATable {
         Product products = menuService.updateOrderInProduct(idProduct, product);
         return HttpResponse.ok(products);
     }

@@ -1,19 +1,19 @@
 micronaut:
-#  security:
-#    enabled: false
-#    token:
-#      jwt:
-#        signatures:
-#          secret:
-#            generator:
-#              secret: "usersecretforjwtauthenticateoratoroeuaroupadoreideromalalalameudeuscomoessabencaodechave"
+  server:
+    port: 8087
+  security:
+    enabled: true
+    authentication: bearer
+
+jwt:
+  secret: "usersecretforjwtauthenticateoratoroeuaroupadoreideromalalalameudeuscomoessabencaodechave"
 
 datasources:
   default:
-    url: jdbc:postgresql://localhost:5432/login-db
+    url: jdbc:postgresql://localhost:5435/login-db
     username: postgres
     password: 2503
-    driver-class-name: org.postgresql.Driver
+    driverClassName: org.postgresql.Driver
     dialect: io.micronaut.data.jdbc.postgres.PostgresDialect
     maximumPoolSize: 40
     minimumIdle: 10
@@ -27,4 +27,5 @@ jpa:
       hibernate.format_sql: true
       hibernate.hbm2ddl.auto: update
     entity-scan:
-      packages: com.autorization.models
+      packages:
+        - com.autorization.models

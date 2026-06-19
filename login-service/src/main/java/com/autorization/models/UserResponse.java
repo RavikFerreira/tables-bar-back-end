@@ -1,7 +1,9 @@
 package com.autorization.models;
 
-import java.io.Serializable;
+import io.micronaut.serde.annotation.Serdeable;
 
+import java.io.Serializable;
+@Serdeable
 public class UserResponse implements Serializable {
 
     private static final long serialVersionUID = 1L;

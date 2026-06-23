@@ -1,4 +1,4 @@
-package com.autorization.enums;
+package com.autorization.models.enums;
 
 public enum Role {
     ADMIN,

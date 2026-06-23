@@ -1,35 +1,47 @@
-package com.autorization.models;
+package com.autorization.models.entity;
 
-import com.autorization.enums.Role;
+import com.autorization.models.enums.Role;
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
+
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
 @Serdeable
-public class UserRequest {
+public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String userName;
     @Column(unique = true)
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
-    private Role roles;
+    private Role role;
 
-    public UserRequest(Long id, String password, String email, Role roles) {
+    public User(Long id, Role role, String password, String email, String userName) {
         this.id = id;
+        this.role = role;
         this.password = password;
         this.email = email;
-        this.roles = roles;
+        this.userName = userName;
     }
 
-    public UserRequest() {
+    public User() {
     }
 
     public Long getId() {
         return id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getEmail() {
@@ -48,11 +60,11 @@ public class UserRequest {
         this.password = password;
     }
 
-    public Role getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(Role roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

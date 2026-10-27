@@ -2,7 +2,7 @@ package com.tables.core.models.enums;
 
 public enum Category {
     ESPETINHOS,
-    BEBIDA,
+    BEBIDAS,
     PORCOES,
     BEBIDAS_ALCOOLICAS
 }

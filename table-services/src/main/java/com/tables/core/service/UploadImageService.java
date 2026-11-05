@@ -1,7 +1,6 @@
 package com.tables.core.service;
 
 import io.micronaut.http.MediaType;
-import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.exceptions.HttpStatusException;
 import io.micronaut.http.multipart.CompletedFileUpload;
 import io.micronaut.http.server.types.files.StreamedFile;

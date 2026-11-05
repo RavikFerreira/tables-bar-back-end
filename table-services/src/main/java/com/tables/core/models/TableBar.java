@@ -8,6 +8,7 @@ import io.micronaut.serde.annotation.Serdeable;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Serdeable
 @MappedEntity
@@ -20,11 +21,11 @@ public class TableBar implements Serializable {
     private String id;
     private String idTable;
     private Order order;
-    private double account = 0.0;
+    private BigDecimal account = BigDecimal.ZERO;
 
     private State state;
 
-    public TableBar(String id, String idTable, Order order, double account, State state) {
+    public TableBar(String id, String idTable, Order order, BigDecimal account, State state) {
         this.id = id;
         this.idTable = idTable;
         this.order = order;
@@ -58,11 +59,11 @@ public class TableBar implements Serializable {
         this.order = order;
     }
 
-    public double getAccount() {
+    public BigDecimal getAccount() {
         return account;
     }
 
-    public void setAccount(double account) {
+    public void setAccount(BigDecimal account) {
         this.account = account;
     }
 

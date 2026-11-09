@@ -2,6 +2,7 @@ package com.tables.core.service;
 
 import com.tables.config.exceptions.ItIsNotPossibleToAddAProductToTheMenuWithTheSameId;
 import com.tables.config.exceptions.ProductResourceNotFoundException;
+import com.tables.core.dto.ProductDTO;
 import com.tables.core.kafka.Producer;
 import com.tables.core.models.EventProduct;
 import com.tables.core.models.Product;

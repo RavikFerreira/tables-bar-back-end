@@ -66,8 +66,9 @@ public class ProductService {
     }
 
     public Product updateOrderInProduct(String idProduct, Product product) {
-        searchProduct(idProduct);
-        product.setIdProduct(product.getIdProduct());
+        Product productObj = searchProduct(idProduct);
+        product.setId(productObj.getId());
+        product.setIdProduct(productObj.getIdProduct());
         product.setQuantity(product.getQuantity());
         product.setCategory(product.getCategory());
         product.setDescription(product.getDescription());
@@ -77,7 +78,7 @@ public class ProductService {
         product.setName(product.getName());
         product.setPrice(product.getPrice());
         producer.sendEventProduct(jsonUtil.toJson(createProductPayload(product)));
-        productRepository.save(product);
+        productRepository.update(product);
         return product;
     }
 

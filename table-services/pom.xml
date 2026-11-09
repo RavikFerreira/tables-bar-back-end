@@ -12,6 +12,7 @@
     <artifactId>micronaut-parent</artifactId>
     <version>4.6.3</version>
   </parent>
+
   <properties>
     <packaging>jar</packaging>
     <jdk.version>21</jdk.version>
@@ -143,6 +144,7 @@
           <configFile>aot-${packaging}.properties</configFile>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>

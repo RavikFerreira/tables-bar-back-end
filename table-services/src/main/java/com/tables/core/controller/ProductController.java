@@ -39,8 +39,8 @@ public class ProductController {
         return HttpResponse.ok(product);
     }
 
-    @Patch("updateOrderInProduct/{idProduct}")
-    public MutableHttpResponse<Product> updateOrderInProduct(@PathVariable String idProduct, @Body Product product) throws UnableToEditAnOrderFromATable {
+    @Patch("updateProduct/{idProduct}")
+    public HttpResponse<Product> updateOrderInProduct(@PathVariable String idProduct, @Body Product product) throws UnableToEditAnOrderFromATable {
         Product products = menuService.updateOrderInProduct(idProduct, product);
         return HttpResponse.ok(products);
     }

@@ -22,6 +22,18 @@ services:
     ports:
       - "5432:5432"
 
+  login-db:
+    image: postgres:latest
+    container_name: login-db
+    networks:
+      - orchestrator-services
+    environment:
+      POSTGRES_DB: login-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 2503
+    ports:
+      - "5435:5432"
+
   inventory-db:
     image: postgres:latest
     container_name: inventory-db

@@ -8,6 +8,7 @@ import io.micronaut.serde.annotation.Serdeable;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Serdeable
 @MappedEntity
@@ -20,12 +21,13 @@ public class Product implements Serializable {
     private String id;
     private String idProduct;
     private String name;
-    private double price = 0.0;
+    private BigDecimal price;
     private int quantity;
     private Category category;
     private String description;
+    private String image;
 
-    public Product(String id, String idProduct, String name, double price, int quantity, Category category, String description) {
+    public Product(String id, String idProduct, String name, BigDecimal price, int quantity, Category category, String description, String image) {
         this.id = id;
         this.idProduct = idProduct;
         this.name = name;
@@ -33,6 +35,7 @@ public class Product implements Serializable {
         this.quantity = quantity;
         this.category = category;
         this.description = description;
+        this.image = image;
     }
 
     public Product(){}
@@ -61,11 +64,11 @@ public class Product implements Serializable {
         this.name = name;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -91,5 +94,13 @@ public class Product implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

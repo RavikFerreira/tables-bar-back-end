@@ -64,18 +64,20 @@ public class ProductService {
     }
 
     public Product updateOrderInProduct(String idProduct, Product product) {
-        Product existingProduct = searchProduct(idProduct);
-        existingProduct.setIdProduct(product.getIdProduct());
-        existingProduct.setName(product.getName());
-        existingProduct.setPrice(product.getPrice());
-        existingProduct.setQuantity(product.getQuantity());
-        existingProduct.setCategory(product.getCategory());
-        existingProduct.setDescription(product.getDescription());
-        if(existingProduct.getDescription() == null){
-            existingProduct.setDescription(" ");
+        Product productObj = searchProduct(idProduct);
+        product.setId(productObj.getId());
+        product.setIdProduct(productObj.getIdProduct());
+        product.setQuantity(product.getQuantity());
+        product.setCategory(product.getCategory());
+        product.setDescription(product.getDescription());
+        if(product.getDescription() == null){
+            product.setDescription(" ");
         }
-        productRepository.update(existingProduct);
-        return existingProduct;
+        product.setName(product.getName());
+        product.setPrice(product.getPrice());
+        producer.sendEventProduct(jsonUtil.toJson(createProductPayload(product)));
+        productRepository.update(product);
+        return product;
     }
 
     public Product deleteProduct(String idProduct) {

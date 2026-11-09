@@ -17,6 +17,7 @@ import io.micrometer.core.instrument.MeterRegistry;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -46,12 +47,12 @@ public class TableService {
         List<TableBar> tableBars = tableRepository.findAll();
 
         for(TableBar tableBar : tableBars){
-            double account = 0.0;
+            BigDecimal account = BigDecimal.ZERO;
             if(tableBar.getOrder() != null){
                 List<Product> products = tableBar.getOrder().getProducts();
                 if(products != null) {
                     for(Product product : products) {
-                        account += product.getPrice() * product.getQuantity();
+                        account = product.getPrice().multiply(BigDecimal.valueOf(product.getQuantity()));
                     }
                     tableBar.setAccount(account);
                 }
@@ -118,8 +119,8 @@ public class TableService {
         }
         tables.setAccount(tables.getOrder().getProducts()
                 .stream()
-                .map( product -> product.getPrice() * product.getQuantity())
-                .reduce(0.0, Double::sum));
+                .map( product -> product.getPrice().multiply(BigDecimal.valueOf(product.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add));
 
         tableRepository.update(tables);
         return tables;
@@ -150,9 +151,9 @@ public class TableService {
         TableBar tables = tableRepository.findByIdTable(table).orElseThrow(() -> new TablesResourceNotFoundException("Tables resource not found!"));
         if(tables.getOrder() != null) {
             List<Product> products = tables.getOrder().getProducts();
-            double account = 0.0;
+            BigDecimal account = BigDecimal.ZERO;
             for (Product product : products) {
-                account += product.getPrice() * product.getQuantity();
+                account = product.getPrice().multiply(BigDecimal.valueOf(product.getQuantity()));
             }
             tables.setAccount(account);
         }
@@ -187,7 +188,7 @@ public class TableService {
         else {
             tables.setState(State.LIVRE);
             tables.setOrder(null);
-            tables.setAccount(0.0);
+            tables.setAccount(BigDecimal.ZERO);
             tableRepository.update(tables);
         }
         return tables;

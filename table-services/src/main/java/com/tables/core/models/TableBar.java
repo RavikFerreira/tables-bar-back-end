@@ -21,7 +21,7 @@ public class TableBar implements Serializable {
     private String id;
     private String idTable;
     private Order order;
-    private BigDecimal account = BigDecimal.ZERO;
+    private BigDecimal account;
 
     private State state;
 

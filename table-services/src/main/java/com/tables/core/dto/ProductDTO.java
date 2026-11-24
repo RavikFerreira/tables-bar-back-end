@@ -6,6 +6,8 @@ import io.micronaut.serde.annotation.Serdeable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @Serdeable
 @NoArgsConstructor
@@ -13,7 +15,7 @@ public class ProductDTO {
 
     private String idProduct;
     private String name;
-    private double price = 0.0;
+    private BigDecimal price;
     private int quantity;
     private Category category;
     private String description;

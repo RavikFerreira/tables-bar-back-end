@@ -44,21 +44,7 @@ public class TableService {
     private EventService eventService;
 
     public List<TableBar> list(){
-        List<TableBar> tableBars = tableRepository.findAll();
-
-        for(TableBar tableBar : tableBars){
-            BigDecimal account = BigDecimal.ZERO;
-            if(tableBar.getOrder() != null){
-                List<Product> products = tableBar.getOrder().getProducts();
-                if(products != null) {
-                    for(Product product : products) {
-                        account = product.getPrice().multiply(BigDecimal.valueOf(product.getQuantity()));
-                    }
-                    tableBar.setAccount(account);
-                }
-            }
-        }
-        return tableBars;
+        return tableRepository.findAll();
     }
 
     public TableBar addTables(TableBar tables){

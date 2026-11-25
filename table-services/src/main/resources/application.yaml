@@ -1,6 +1,26 @@
 micronaut:
   server:
     port: 8083
+    cors:
+      enabled: true
+      configurations:
+        web:
+          allowedOrigins:
+            - http://localhost:3000
+          allowedMethods:
+            - GET
+            - POST
+            - PUT
+            - PATCH
+            - DELETE
+            - OPTIONS
+          allowedHeaders:
+            - Content-Type
+            - Authorization
+    max-request-size: 5MB
+    multipart:
+      max-file-size: 5MB
+
   router:
     static-resources:
       swagger:
@@ -10,11 +30,11 @@ micronaut:
         paths: classpath:META-INF/swagger/views/swagger-ui
         mapping: /swagger-ui/**
 
-  export:
-    prometheus:
-      enabled: true
-      step: PT1M
-      descriptions: true
+#  export:
+#    prometheus:
+#      enabled: true
+#      step: PT1M
+#      descriptions: true
 #  router:
 #    static-resources:
 #      swagger:

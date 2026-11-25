@@ -35,7 +35,7 @@ public class InventoryService {
     public void updateInventory(Event event){
         try{
             checkCurrentValidation(event);
-            createInventory(event);
+//            createInventory(event);
             updateInventory(event.getPayload().getOrder());
             handleSuccess(event);
         }catch (Exception ex) {
@@ -51,24 +51,24 @@ public class InventoryService {
         }
     }
 
-    private void createInventory(Event event){
-        event
-                .getPayload()
-                .getOrder()
-                .getProducts().forEach(product -> {
-                    Inventory inventory = findInventoryByIdProduct(product.getIdProduct());
-                    Inventory orderInventory = createInventory(event, product, inventory);
-                    inventoryRepository.update(orderInventory);
-        } );
-    }
-    private Inventory createInventory(Event event, Product product, Inventory inventory){
-        Inventory inventory1 = new Inventory();
-        inventory1.setOldQuantity(inventory.getAvailable());
-        inventory1.setNewQuantity(inventory.getAvailable() - product.getQuantity());
-        inventory1.setTableId(event.getPayload().getIdTable());
-        inventory1.setTransactionId(event.getTransactionId());
-        return inventoryRepository.save(inventory1);
-    }
+//    private void createInventory(Event event){
+//        event
+//                .getPayload()
+//                .getOrder()
+//                .getProducts().forEach(product -> {
+//                    Inventory inventory = findInventoryByIdProduct(product.getIdProduct());
+//                    Inventory orderInventory = createInventory(event, product, inventory);
+//                    inventoryRepository.update(inventory);
+//        } );
+//    }
+//    private Inventory createInventory(Event event, Product product, Inventory inventory){
+//        Inventory inventory1 = new Inventory();
+//        inventory1.setOldQuantity(inventory.getAvailable());
+//        inventory1.setNewQuantity(inventory.getAvailable() - product.getQuantity());
+//        inventory1.setTableId(event.getPayload().getIdTable());
+//        inventory1.setTransactionId(event.getTransactionId());
+//        return inventoryRepository.save(inventory1);
+//    }
 
     private Inventory findInventoryByIdProduct(String idProduct){
         return inventoryRepository.findByIdProduct(idProduct).orElseThrow(() -> new RuntimeException("Inventory not found informed product"));

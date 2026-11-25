@@ -22,6 +22,18 @@ services:
     ports:
       - "5432:5432"
 
+  login-db:
+    image: postgres:latest
+    container_name: login-db
+    networks:
+      - orchestrator-services
+    environment:
+      POSTGRES_DB: login-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 2503
+    ports:
+      - "5435:5432"
+
   inventory-db:
     image: postgres:latest
     container_name: inventory-db
@@ -133,11 +145,28 @@ services:
       - orchestrator-services
     environment:
       KAFKA_BOOTSTRAP_SERVERS: kafka:29092
-      DATASOURCES_DEFAULT_URL: jdbc:postgresql://product-db:5432/product-db
+      DATASOURCES_DEFAULT_URL: jdbc:postgresql://product-db:5433/product-db
       DATASOURCES_DEFAULT_USERNAME: postgres
       DATASOURCES_DEFAULT_PASSWORD: 2503
     ports:
       - "8085:8085"
+
+  inventory-service:
+    build: './inventory-service'
+    container_name: inventory-service
+    depends_on:
+      - inventory-db
+      - kafka
+    networks:
+      - orchestrator-services
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      DATASOURCES_DEFAULT_URL: jdbc:postgresql://inventory-db:5434/inventory-db
+      DATASOURCES_DEFAULT_USERNAME: postgres
+      DATASOURCES_DEFAULT_PASSWORD: 2503
+    ports:
+      - "8086:8086"
+
 
   table-services:
     build: './table-services'

@@ -30,9 +30,8 @@ public class InventoryProductService {
 
     public void createInventory(EventProduct event){
         try{
-//            createInventoryProduct(event);
-//            Product product = event.getPayload();
-            Inventory orderInventory = createInventoryProduct(event);
+            Product product = event.getPayload();
+            Inventory orderInventory = createInventoryProduct(product);
             inventoryRepository.update(orderInventory);
             handleSuccess(event);
         }catch (Exception ex) {
@@ -42,10 +41,10 @@ public class InventoryProductService {
             producer.sendEventProduct(jsonUtil.toJson(event));
     }
 
-    private Inventory createInventoryProduct(EventProduct event){
+    private Inventory createInventoryProduct(Product product){
         Inventory inventory = new Inventory();
-        inventory.setIdProduct(event.getPayload().getIdProduct());
-        inventory.setAvailable(event.getPayload().getQuantity());
+        inventory.setIdProduct(product.getIdProduct());
+        inventory.setAvailable(product.getQuantity());
         inventory.setOldQuantity(inventory.getAvailable());
         return inventoryRepository.save(inventory);
     }

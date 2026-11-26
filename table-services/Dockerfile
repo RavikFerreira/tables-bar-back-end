@@ -1,4 +1,5 @@
 FROM eclipse-temurin:21-jdk-alpine-3.20 AS builder
+FROM maven:3.8.3-openjdk-17 AS build
 WORKDIR /app
 COPY . .
 RUN ./mvnw clean package -DskipTests || true

@@ -55,7 +55,7 @@ endpoints:
 
 
 mongodb:
-  uri: mongodb://localhost:27017/table-db
+  uri: ${MONGODB_URI}
 
 redis:
   uri: redis://localhost:6379

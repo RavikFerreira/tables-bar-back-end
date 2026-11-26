@@ -28,7 +28,18 @@ micronaut:
       swagger-ui:
         paths: classpath:META-INF/swagger/views/swagger-ui
         mapping: /swagger-ui/**
+  security:
+    enabled: true
+    authentication: bearer
+    token:
+      jwt:
+        signatures:
+          secret:
+            generator:
+              secret: "9f3c1a7b6d4e8f90a1c2b3d4e5f60718"
 
+jwt:
+  secret: "9f3c1a7b6d4e8f90a1c2b3d4e5f60718"
 #  export:
 #    prometheus:
 #      enabled: true
@@ -52,9 +63,12 @@ endpoints:
   prometheus:
     sensitive: false
 
+#
+#mongodb:
+#  uri: ${MONGODB_URI}
 
 mongodb:
-  uri: ${MONGODB_URI}
+  uri: mongodb://localhost:27017/table-db
 
 redis:
   uri: redis://localhost:6379
@@ -71,6 +85,7 @@ kafka:
     servers: localhost:9092
 
   topic:
+    login: login
     start: start
     notify: notify
 

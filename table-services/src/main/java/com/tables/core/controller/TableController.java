@@ -15,6 +15,7 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Patch;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Post;
+import io.micronaut.security.annotation.Secured;
 import jakarta.inject.Inject;
 
 import java.util.List;
@@ -25,50 +26,59 @@ public class TableController {
     private TableService tableService;
 
     @Get("list")
+    @Secured("ADMIN")
     public HttpResponse<List<TableBar>> listOrders(){
         return HttpResponse.ok(tableService.list());
     }
 
     @Post("create")
+    @Secured("ADMIN")
     public HttpResponse<TableBar> addTables(@Body TableBar tableBar) throws TablesResourceNotFoundException, CannotCreateATableWithTheSameId {
         TableBar addTables = tableService.addTables(tableBar);
         return HttpResponse.created(addTables);
     }
 
     @Patch("orders/{idTable}")
+    @Secured("ADMIN")
     public HttpResponse<TableBar> addOrder(@PathVariable String idTable){
         TableBar addOrder = tableService.addOrder(idTable);
         return HttpResponse.ok(addOrder);
     }
     @Patch("addProductInOrder/{idTable}/{idProduct}")
+    @Secured("ADMIN")
     public HttpResponse<TableBar> addProductInOrder(@PathVariable String idTable, @PathVariable String idProduct) throws ProductResourceNotFoundException {
         TableBar product = tableService.addProductInOrder(idTable, idProduct);
         return HttpResponse.created(product);
     }
     @Get("finallyOrder/{idTable}")
+    @Secured("ADMIN")
     public HttpResponse<TableBar> finalizedOrder(@PathVariable String idTable){
         tableService.finalizedOrder(idTable);
         return HttpResponse.ok();
     }
 
     @Get("search/{idTable}")
+    @Secured("ADMIN")
     public HttpResponse<TableBar> search(@PathVariable String idTable){
         TableBar tables = tableService.search(idTable);
         return HttpResponse.ok(tables);
     }
 
     @Delete("delete/{idTable}")
+    @Secured("ADMIN")
     public HttpResponse<TableBar> delete(@PathVariable String idTable) throws CannotDeleteABusyTable {
         tableService.delete(idTable);
         return HttpResponse.ok();
     }
 
     @Get("payment/{idTable}")
+    @Secured("ADMIN")
     public HttpResponse<TableBar> realizedPayment(@PathVariable String idTable){
         tableService.realizedPayment(idTable);
         return HttpResponse.ok();
     }
     @Get("finallyTables/{idTable}")
+    @Secured("ADMIN")
     public HttpResponse<TableBar> finalizedTable(@PathVariable String idTable){
         tableService.finalizedTable(idTable);
         return HttpResponse.ok();

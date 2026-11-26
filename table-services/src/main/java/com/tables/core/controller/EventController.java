@@ -5,11 +5,13 @@ import com.tables.core.service.EventService;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.QueryValue;
+import io.micronaut.security.annotation.Secured;
 import jakarta.inject.Inject;
 
 import java.util.List;
 
 @Controller("event/")
+@Secured("ADMIN")
 public class EventController {
 
     @Inject

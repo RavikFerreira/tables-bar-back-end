@@ -5,8 +5,7 @@ micronaut:
       enabled: true
       configurations:
         web:
-          allowedOrigins:
-            - ${FRONTEND_URL:http://localhost:3000}
+          allowed-origins-regex: '^(https://tables-bar-front[a-z0-9-]*-ravik-ferreira\.vercel\.app|https://tables-bar-front-end\.vercel\.app|http://localhost:3000)$'
           allowedMethods:
             - GET
             - POST

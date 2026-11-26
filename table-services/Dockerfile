@@ -1,16 +1,18 @@
+# ---------- Build ----------
+FROM maven:3.9-eclipse-temurin-21 AS build
+WORKDIR /app
 
-#
-# Build stage
-#
-FROM maven:3.8.3-openjdk-21 AS build
-COPY . .
-RUN mvn clean install
+COPY pom.xml .
+RUN mvn -B dependency:go-offline
 
-#
-# Package stage
-#
-FROM eclipse-temurin:21-jdk
-COPY --from=build /target/your-build.jar app.jar
-# ENV PORT=8080
+COPY src ./src
+RUN mvn -B clean package -DskipTests
+
+# ---------- Runtime ----------
+FROM eclipse-temurin:21-jre
+WORKDIR /app
+
+COPY --from=build /app/target/*.jar app.jar
+
 EXPOSE 8083
-ENTRYPOINT ["java","-jar","app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
